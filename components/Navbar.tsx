@@ -94,7 +94,7 @@ export default function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.3 }}
-            className="glass fixed inset-x-4 top-20 z-40 flex flex-col gap-1 rounded-3xl p-4 md:hidden"
+            className="fixed inset-x-4 top-20 z-40 flex flex-col gap-1 rounded-3xl border border-white/10 bg-panel/95 p-4 shadow-2xl shadow-black/50 backdrop-blur-xl md:hidden"
           >
             {links.map((link) => (
               <button

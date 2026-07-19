@@ -9,9 +9,12 @@ export const profile = {
   location: "Dhaka, Bangladesh",
   university: "University of Asia Pacific",
   tagline:
-    "I build computer-vision systems that read attention in the classroom, and full-stack products people actually use.",
-  bio:
-    "Final-year Computer Science & Engineering student researching multimodal attention analysis for smart classrooms — fusing facial expression, head pose, gaze and posture signals with an LLM reasoning layer that turns raw signal into pedagogical recommendation. Outside the lab, I ship full-stack products end to end, from schema to shipped UI.",
+    "Building innovative software solutions with a passion for web development, machine learning, and emerging technologies.",
+  bio: `I am a Computer Science and Engineering student at the University of Asia Pacific with a strong passion for software development, problem-solving, and emerging technologies. I enjoy building practical solutions through programming and exploring areas such as web development, machine learning, and artificial intelligence.
+
+Throughout my academic journey, I have worked on various projects involving Django, database systems, and machine learning applications. I am always eager to learn new technologies, enhance my skills, and transform ideas into impactful digital solutions.
+
+Currently, I am focusing on expanding my knowledge in software engineering and research while preparing myself for future opportunities in the technology industry.`,
   email: "forhadsiddique.official@gmail.com", 
   resumeUrl: "/resume.pdf",
   avatar: "/avatar.jpg", 
