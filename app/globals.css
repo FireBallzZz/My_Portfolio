@@ -1,0 +1,292 @@
+@import "tailwindcss";
+
+/* ---------------------------------------------------------------------- */
+/* Design tokens                                                          */
+/* ---------------------------------------------------------------------- */
+
+@theme inline {
+  --color-void: #05060a;
+  --color-panel: #0b0e17;
+  --color-panel-2: #10131f;
+  --color-line: #1e2233;
+  --color-violet: #7c5cff;
+  --color-violet-soft: #a78bfa;
+  --color-cyan: #22d3ee;
+  --color-amber: #ffb454;
+  --color-ink: #e9eaf2;
+  --color-muted: #8a8fa3;
+
+  --font-display: var(--font-space-grotesk);
+  --font-body: var(--font-inter);
+  --font-mono: var(--font-jetbrains);
+}
+
+html {
+  color-scheme: dark;
+}
+
+body {
+  background: var(--color-void);
+  overflow-x: hidden;
+}
+
+/* ---------------------------------------------------------------------- */
+/* Ambient backdrop — grid + aurora + grain, shared by the page shell.    */
+/* Rendered once, fixed, behind everything (see AmbientBackground.tsx),  */
+/* so every section reads as part of one continuous atmosphere instead   */
+/* of flat black panels stacked on top of each other.                    */
+/* ---------------------------------------------------------------------- */
+
+.bg-grid {
+  background-image:
+    linear-gradient(to right, rgba(233, 234, 242, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(233, 234, 242, 0.05) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 40%, transparent 100%);
+}
+
+.ambient-grid {
+  background-image:
+    linear-gradient(to right, rgba(233, 234, 242, 0.045) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(233, 234, 242, 0.045) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: radial-gradient(ellipse 90% 70% at 50% 20%, #000 30%, transparent 100%);
+}
+
+.bg-aurora::before {
+  content: "";
+  position: absolute;
+  inset: -20% -10%;
+  z-index: -1;
+  background:
+    radial-gradient(38% 30% at 18% 12%, rgba(124, 92, 255, 0.35), transparent 70%),
+    radial-gradient(32% 26% at 82% 22%, rgba(34, 211, 238, 0.22), transparent 70%),
+    radial-gradient(40% 35% at 50% 85%, rgba(124, 92, 255, 0.12), transparent 70%);
+  filter: blur(60px);
+  animation: aurora-drift 22s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+
+/* Three independently-drifting blobs, layered with a warm accent so the
+   canvas reads as considered rather than "flat black with a logo on it". */
+.ambient-aurora-a,
+.ambient-aurora-b,
+.ambient-aurora-c {
+  position: absolute;
+  border-radius: 999px;
+  filter: blur(90px);
+  pointer-events: none;
+  will-change: transform;
+}
+.ambient-aurora-a {
+  top: -10%;
+  left: -8%;
+  width: 55vw;
+  height: 55vw;
+  background: radial-gradient(closest-side, rgba(124, 92, 255, 0.26), transparent 72%);
+  animation: aurora-drift-a 26s ease-in-out infinite alternate;
+}
+.ambient-aurora-b {
+  top: 20%;
+  right: -12%;
+  width: 48vw;
+  height: 48vw;
+  background: radial-gradient(closest-side, rgba(34, 211, 238, 0.16), transparent 72%);
+  animation: aurora-drift-b 32s ease-in-out infinite alternate;
+}
+.ambient-aurora-c {
+  bottom: -15%;
+  left: 22%;
+  width: 50vw;
+  height: 50vw;
+  background: radial-gradient(closest-side, rgba(255, 180, 84, 0.06), transparent 72%);
+  animation: aurora-drift-c 38s ease-in-out infinite alternate;
+}
+
+@keyframes aurora-drift-a {
+  0% { transform: translate3d(0, 0, 0) scale(1); }
+  100% { transform: translate3d(4%, 5%, 0) scale(1.08); }
+}
+@keyframes aurora-drift-b {
+  0% { transform: translate3d(0, 0, 0) scale(1); }
+  100% { transform: translate3d(-5%, 4%, 0) scale(1.1); }
+}
+@keyframes aurora-drift-c {
+  0% { transform: translate3d(0, 0, 0) scale(1); }
+  100% { transform: translate3d(3%, -4%, 0) scale(1.05); }
+}
+
+/* Soft vignette so the edges of the viewport recede and content in the
+   middle reads with more contrast/focus — a common "premium" cue. */
+.ambient-vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    120% 90% at 50% 0%,
+    transparent 55%,
+    rgba(5, 6, 10, 0.55) 100%
+  );
+  pointer-events: none;
+}
+
+/* Fine grain so the dark base reads as an intentional material rather
+   than a flat, banded black — the "boring" flat-black look, fixed. */
+.ambient-grain {
+  position: absolute;
+  inset: 0;
+  opacity: 0.05;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  background-size: 140px 140px;
+}
+
+@keyframes aurora-drift {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(2%, -3%, 0) scale(1.05);
+  }
+  100% {
+    transform: translate3d(-3%, 2%, 0) scale(1);
+  }
+}
+
+/* ---------------------------------------------------------------------- */
+/* Glass panels                                                           */
+/* ---------------------------------------------------------------------- */
+
+.glass {
+  background: linear-gradient(
+    160deg,
+    rgba(233, 234, 242, 0.06),
+    rgba(233, 234, 242, 0.015)
+  );
+  border: 1px solid rgba(233, 234, 242, 0.09);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+/* Animated conic gradient border. Wrap target in a relatively-positioned
+   element with class "gradient-border" and a child with class "gradient-border-inner". */
+.gradient-border {
+  position: relative;
+  isolation: isolate;
+}
+
+.gradient-border::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: conic-gradient(
+    from var(--angle, 0deg),
+    var(--color-violet),
+    var(--color-cyan),
+    var(--color-violet-soft),
+    var(--color-violet)
+  );
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  animation: spin-angle 6s linear infinite;
+  opacity: 0.85;
+  z-index: -1;
+}
+
+@property --angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes spin-angle {
+  to {
+    --angle: 360deg;
+  }
+}
+
+/* ---------------------------------------------------------------------- */
+/* Utility animations                                                     */
+/* ---------------------------------------------------------------------- */
+
+@keyframes float-y {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-14px);
+  }
+}
+.animate-float {
+  animation: float-y 6s ease-in-out infinite;
+}
+
+@keyframes pulse-soft {
+  0%,
+  100% {
+    opacity: 0.55;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+.animate-pulse-soft {
+  animation: pulse-soft 2.4s ease-in-out infinite;
+}
+
+@keyframes blink-caret {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+.animate-caret {
+  animation: blink-caret 0.9s step-end infinite;
+}
+
+/* ---------------------------------------------------------------------- */
+/* Scrollbar                                                              */
+/* ---------------------------------------------------------------------- */
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-void);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-line);
+  border-radius: 999px;
+  border: 2px solid var(--color-void);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-violet);
+}
+
+/* ---------------------------------------------------------------------- */
+/* Accessibility baseline                                                 */
+/* ---------------------------------------------------------------------- */
+
+:focus-visible {
+  outline: 2px solid var(--color-cyan);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
