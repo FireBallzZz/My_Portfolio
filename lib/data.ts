@@ -10,11 +10,8 @@ export const profile = {
   university: "University of Asia Pacific",
   tagline:
     "Building innovative software solutions with a passion for web development, machine learning, and emerging technologies.",
-  bio: `I am a Computer Science and Engineering student at the University of Asia Pacific with a strong passion for software development, problem-solving, and emerging technologies. I enjoy building practical solutions through programming and exploring areas such as web development, machine learning, and artificial intelligence.
-
-Throughout my academic journey, I have worked on various projects involving Django, database systems, and machine learning applications. I am always eager to learn new technologies, enhance my skills, and transform ideas into impactful digital solutions.
-
-Currently, I am focusing on expanding my knowledge in software engineering and research while preparing myself for future opportunities in the technology industry.`,
+  bio: `I am a Computer Science and Engineering student at the University of Asia Pacific with a passion for software development, web technologies, and AI. I enjoy building practical applications, solving real-world problems, and continuously learning new technologies. Currently, I am expanding my skills in software engineering while preparing for a career in the technology industry.
+`,
   email: "forhadsiddique.official@gmail.com", 
   resumeUrl: "/resume.pdf",
   avatar: "/avatar.jpg", 
@@ -94,20 +91,66 @@ export const projects: Project[] = [
     ],
   },
   {
-    id: "sneakers",
-    index: "04",
-    title: "Sneakers",
-    tagline: "Full-stack storefront for drop-culture retail",
-    description:
-      "A full-stack eCommerce build — product catalog, cart and checkout — engineered for a fast, uncluttered shopping flow from browse to purchase.", // EDIT ME
-    tags: ["React", "Express", "MongoDB", "Stripe"],
-    category: "Full-Stack · eCommerce",
-    year: "2025",
-    links: [
-      { label: "Live demo", href: "#" }, // EDIT 
-      { label: "Repository", href: "https://github.com/FireBallzZz/e-commerce" }, 
-    ],
-  },
+  id: "taskflow",
+  index: "05",
+  title: "TaskFlow",
+  tagline: "Smart task & productivity management platform",
+  description:
+    "A responsive productivity web app featuring task management, calendar planning, reminders, Pomodoro timer, notes, and daily routine tracking to boost personal productivity.",
+  tags: ["React", "Node.js", "MongoDB", "Express"],
+  category: "Full-Stack · Productivity",
+  year: "2026",
+  links: [
+    { label: "Live demo", href: "focusdesk-dusky.vercel.app" }, // EDIT
+    { label: "Repository", href: "https://github.com/FireBallzZz/focusdesk.git" }, // EDIT
+  ],
+},
+{
+  id: "expensetap",
+  index: "06",
+  title: "ExpenseTap",
+  tagline: "Personal finance & expense tracking dashboard",
+  description:
+    "A modern personal finance management platform for tracking income, expenses, savings, and spending analytics with an intuitive dashboard and responsive interface.",
+  tags: ["React", "Firebase", "Chart.js", "Tailwind CSS"],
+  category: "Finance · Dashboard",
+  year: "2026",
+  links: [
+    { label: "Live demo", href: " https://drive.google.com/file/d/1gckdWOZxM6vnVWkBfOj4iW2ar1wcupkO/view?usp=drive_link" },
+    { label: "Repository", href: "https://github.com/FireBallzZz/expense-tap.git" }, 
+  ],
+},
+{
+  id: "medicareminder",
+  index: "07",
+  title: "MediCare Reminder",
+  tagline: "Smart medicine reminder & prescription manager",
+  description:
+    "A medicine management platform with prescription scanning, medication scheduling, dosage reminders, treatment history, and progress tracking for better healthcare management.",
+  tags: ["React", "Firebase", "OCR", "PWA"],
+  category: "Health · Web App",
+  year: "2026",
+  links: [
+    { label: "Live demo", href: "#" }, 
+    { label: "Repository", href: "" }, // EDIT
+  ],
+},
+{
+  id: "financemanager",
+  index: "08",
+  title: "Finance Manager",
+  tagline: "Complete personal finance & budget management platform",
+  description:
+    "A full-featured personal finance web application that helps users manage income, expenses, budgets, savings goals, recurring transactions, and financial insights through interactive analytics and a clean dashboard.",
+  tags: ["React", "Node.js", "Express", "MongoDB", "Chart.js"],
+  category: "Full-Stack · Finance",
+  year: "2026",
+  links: [
+    { label: "Live demo", href: "financeflow-sepia-five.vercel.app" }, 
+    { label: "Repository", href: "https://github.com/FireBallzZz/financeflow.git" }, 
+  ],
+},
+
 ];
 
 export type SkillGroup = {
