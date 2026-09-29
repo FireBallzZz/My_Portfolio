@@ -4,6 +4,7 @@ import "./globals.css";
 import Loader from "@/components/Loader";
 import ScrollProgress from "@/components/ScrollProgress";
 import AmbientBackground from "@/components/AmbientBackground";
+import Cursor from "@/components/Cursor";
 import { profile } from "@/lib/data";
 
 const display = Space_Grotesk({
@@ -29,7 +30,7 @@ const mono = JetBrains_Mono({
 export const metadata: Metadata = {
   title: `${profile.name} — ${profile.roles[0]}`,
   description: profile.tagline,
-  metadataBase: new URL("http://localhost:3000"), // EDIT ME
+  metadataBase: new URL("http://localhost:3000"),
   openGraph: {
     title: `${profile.name} — ${profile.roles[0]}`,
     description: profile.tagline,
@@ -51,7 +52,14 @@ export default function RootLayout({
         suppressHydrationWarning
         className={`${display.variable} ${body.variable} ${mono.variable} bg-void text-ink font-body antialiased selection:bg-violet/30 selection:text-white`}
       >
+        <a
+          href="#main"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-3 focus:top-3 focus:z-[200] focus:rounded-md focus:bg-void focus:px-3 focus:py-2 focus:text-sm focus:text-ink focus:shadow-lg"
+        >
+          Skip to content
+        </a>
         <AmbientBackground />
+        <Cursor />
         <Loader />
         <ScrollProgress />
         {children}

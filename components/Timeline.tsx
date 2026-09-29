@@ -13,17 +13,23 @@ export default function Timeline() {
   });
 
   return (
-    <section id="timeline" className="relative px-6 py-28 sm:px-10 lg:px-16">
+    <section
+      id="timeline"
+      aria-labelledby="timeline-heading"
+      className="relative px-5 py-20 sm:px-10 sm:py-24 lg:px-16 lg:py-28"
+    >
       <div className="mx-auto max-w-4xl">
         <SectionTag index="04" stage="training_log" title="Timeline" />
 
         <div ref={containerRef} className="relative mt-16 pl-8 sm:pl-10">
-          {/* track */}
-          <div className="absolute left-[3px] top-0 h-full w-px bg-line sm:left-[7px]" />
-          {/* progress line */}
+          <div
+            className="absolute left-[3px] top-0 h-full w-px bg-line sm:left-[7px]"
+            aria-hidden
+          />
           <motion.div
             className="absolute left-[3px] top-0 w-px origin-top bg-gradient-to-b from-violet to-cyan sm:left-[7px]"
             style={{ scaleY: scrollYProgress, height: "100%" }}
+            aria-hidden
           />
 
           <div className="flex flex-col gap-14">
@@ -36,7 +42,10 @@ export default function Timeline() {
                 transition={{ duration: 0.6, delay: i * 0.05, ease: "easeOut" }}
                 className="relative"
               >
-                <span className="absolute -left-8 top-1.5 h-2.5 w-2.5 rounded-full bg-cyan shadow-[0_0_0_4px_rgba(34,211,238,0.15)] sm:-left-10" />
+                <span
+                  className="absolute -left-8 top-1.5 h-2.5 w-2.5 rounded-full bg-cyan shadow-[0_0_0_4px_rgba(34,211,238,0.15)] sm:-left-10"
+                  aria-hidden
+                />
                 <div className="font-mono text-xs uppercase tracking-wider text-cyan">
                   {entry.period}
                 </div>

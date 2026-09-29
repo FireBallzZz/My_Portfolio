@@ -4,9 +4,6 @@ import { useEffect, useRef } from "react";
 import * as THREE from "three";
 import { useReducedMotion } from "framer-motion";
 
-/** A quiet field of drifting points behind the hero — deliberately restrained
- *  ("Three.js, subtle use" per brief). Parallaxes a few degrees with the
- *  mouse and drifts on its own; freezes for reduced-motion users. */
 export default function ParticleField() {
   const containerRef = useRef<HTMLDivElement>(null);
   const reduceMotion = useReducedMotion();
@@ -103,7 +100,9 @@ export default function ParticleField() {
       geometry.dispose();
       material.dispose();
       renderer.dispose();
-      container.removeChild(renderer.domElement);
+      if (container.contains(renderer.domElement)) {
+        container.removeChild(renderer.domElement);
+      }
     };
   }, [reduceMotion]);
 

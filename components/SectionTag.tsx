@@ -8,9 +8,6 @@ type SectionTagProps = {
   title: string;
 };
 
-/** Every section of this site is framed as a stage in an ML pipeline —
- *  input, features, inference, training log, output. The mono-tag encodes
- *  that structure instead of decorating it. */
 export default function SectionTag({ index, stage, title }: SectionTagProps) {
   return (
     <div className="mb-5 flex flex-col gap-4">

@@ -4,13 +4,13 @@ export const profile = {
   roles: [
     "Machine Learning Researcher",
     "Full-Stack Developer",
-    "CSE Undergraduate",
+    "Backend Developer",
   ],
   location: "Dhaka, Bangladesh",
   university: "University of Asia Pacific",
   tagline:
-    "Building innovative software solutions with a passion for web development, machine learning, and emerging technologies.",
-  bio: `I am a Computer Science and Engineering student at the University of Asia Pacific with a passion for software development, web technologies, and AI. I enjoy building practical applications, solving real-world problems, and continuously learning new technologies. Currently, I am expanding my skills in software engineering while preparing for a career in the technology industry.
+    "CSE undergrad · building production APIs, ML pipelines, and full-stack apps.",
+  bio: `I am a Computer Science and Engineering student at the University of Asia Pacific with a passion for software development, web technologies, and AI. I enjoy building practical applications, solving real-world problems, and continuously learning new technologies. Currently, I am doing my internship at Eutropia as a Backend Developer, where I ship production APIs and learn what real-world software teams look like.
 `,
   email: "forhadsiddique.official@gmail.com", 
   resumeUrl: "/resume.pdf",
@@ -28,6 +28,22 @@ export const stats = [
   { value: 1, suffix: "", label: "Novel metric — AGG" },
   { value: 3, suffix: "+", label: "Full-stack products shipped" },
   { value: 2026, suffix: "", label: "Expected graduation" },
+];
+
+export const internships = [
+  {
+    id: "eutropia",
+    company: "Eutropia",
+    role: "Backend Developer Intern",
+    period: "2025 — Present",
+    location: "Dhaka, Bangladesh (Hybrid)",
+    bullets: [
+      "Shipping production APIs on the backend team alongside senior engineers.",
+      "Designing and integrating REST endpoints, database schemas, and service-to-service contracts.",
+      "Owning parts of the codebase end-to-end — code review, deployment, and on-call rotation hygiene.",
+      "Bridging full-stack fundamentals from coursework with how real software ships.",
+    ],
+  },
 ];
 
 export type Project = {
@@ -168,7 +184,14 @@ export const skillGroups: SkillGroup[] = [
   {
     label: "Backend",
     tag: "server",
-    skills: ["Node.js", "Express", "PostgreSQL", "REST APIs"],
+    skills: [
+      "Node.js",
+      "Express",
+      "PostgreSQL",
+      "REST APIs",
+      "API Integration",
+      "Schema Design",
+    ],
   },
   {
     label: "Machine Learning",
@@ -203,6 +226,13 @@ export const timeline: TimelineEntry[] = [
     title: "Full-stack & applied ML",
     description:
       "Moved from coursework into shipped software — full-stack apps end to end, and a first wave of applied machine-learning projects.",
+  },
+  {
+    id: "eutropia-internship",
+    period: "2025 — Present",
+    title: "Backend Developer Intern · Eutropia",
+    description:
+      "Joining the engineering team at Eutropia as a Backend Developer Intern — shipping production APIs, integrating services, and learning what real-world software teams look like day-to-day.",
   },
   {
     id: "research-begins",

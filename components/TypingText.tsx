@@ -1,59 +1,89 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useReducedMotion } from "framer-motion";
 
 type TypingTextProps = {
   words: string[];
   className?: string;
+  /** ms per character while typing */
+  typingSpeed?: number;
+  /** ms per character while deleting */
+  deletingSpeed?: number;
+  /** ms the fully-typed word stays before deleting starts */
+  holdMs?: number;
+  /** ms of empty pause between words */
+  pauseMs?: number;
 };
 
-/** Classic type-then-delete cycler. With reduced motion it just shows the
- *  first word statically instead of animating character-by-character. */
-export default function TypingText({ words, className }: TypingTextProps) {
-  const reduceMotion = useReducedMotion();
-  const [wordIndex, setWordIndex] = useState(0);
-  const [display, setDisplay] = useState("");
-  const [deleting, setDeleting] = useState(false);
+type Phase = "typing" | "hold" | "deleting" | "pause";
+
+export default function TypingText({
+  words,
+  className,
+  typingSpeed = 65,
+  deletingSpeed = 35,
+  holdMs = 1400,
+  pauseMs = 250,
+}: TypingTextProps) {
+  const wordCount = words.length;
+  const [index, setIndex] = useState(0);
+  const [text, setText] = useState("");
+  const [phase, setPhase] = useState<Phase>("typing");
 
   useEffect(() => {
-    if (reduceMotion) {
-      const skip = setTimeout(() => setDisplay(words[0]), 0);
-      return () => clearTimeout(skip);
+    if (wordCount === 0) return;
+
+    const current = words[index % wordCount] ?? "";
+
+    if (phase === "typing") {
+      if (text.length >= current.length) {
+        // Done typing — switch to hold.
+        const t = window.setTimeout(() => setPhase("hold"), holdMs);
+        return () => window.clearTimeout(t);
+      }
+      const t = window.setTimeout(
+        () => setText(current.slice(0, text.length + 1)),
+        typingSpeed
+      );
+      return () => window.clearTimeout(t);
     }
 
-    const current = words[wordIndex % words.length];
-    const typingSpeed = deleting ? 35 : 65;
-    const atFullWord = !deleting && display === current;
-    const atEmpty = deleting && display === "";
+    if (phase === "hold") {
+      const t = window.setTimeout(() => setPhase("deleting"), 0);
+      return () => window.clearTimeout(t);
+    }
 
-    let delay = typingSpeed;
-    if (atFullWord) delay = 1400;
-    if (atEmpty) delay = 300;
-
-    const timeout = setTimeout(() => {
-      if (atFullWord) {
-        setDeleting(true);
-        return;
+    if (phase === "deleting") {
+      if (text.length <= 0) {
+        const t = window.setTimeout(() => setPhase("pause"), 0);
+        return () => window.clearTimeout(t);
       }
-      if (atEmpty) {
-        setDeleting(false);
-        setWordIndex((i) => (i + 1) % words.length);
-        return;
-      }
-      const next = deleting
-        ? current.slice(0, display.length - 1)
-        : current.slice(0, display.length + 1);
-      setDisplay(next);
-    }, delay);
+      const t = window.setTimeout(
+        () => setText(current.slice(0, text.length - 1)),
+        deletingSpeed
+      );
+      return () => window.clearTimeout(t);
+    }
 
-    return () => clearTimeout(timeout);
-  }, [display, deleting, wordIndex, words, reduceMotion]);
+    // pause
+    const t = window.setTimeout(() => {
+      setIndex((i) => (i + 1) % wordCount);
+      setText("");
+      setPhase("typing");
+    }, pauseMs);
+    return () => window.clearTimeout(t);
+  }, [text, phase, index, words, wordCount, typingSpeed, deletingSpeed, holdMs, pauseMs]);
+
+  if (wordCount === 0) return null;
 
   return (
-    <span className={className}>
-      {display}
-      <span className="animate-caret text-cyan">|</span>
+    <span className={className} aria-live="polite">
+      <span aria-hidden>{text || "\u00A0"}</span>
+      <span
+        className="ml-0.5 inline-block w-[0.55em] -translate-y-px animate-caret bg-cyan align-middle"
+        style={{ height: "1em" }}
+        aria-hidden
+      />
     </span>
   );
 }

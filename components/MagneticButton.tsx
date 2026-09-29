@@ -16,8 +16,6 @@ type MagneticButtonProps = {
   download?: boolean;
 };
 
-/** A button/link that leans toward the cursor and springs back on release.
- *  Strength is intentionally subtle — this should read as premium, not gimmicky. */
 export default function MagneticButton({
   children,
   href,
@@ -36,9 +34,6 @@ export default function MagneticButton({
   const springX = useSpring(x, { stiffness: 200, damping: 15, mass: 0.4 });
   const springY = useSpring(y, { stiffness: 200, damping: 15, mass: 0.4 });
 
-  // Measure once on enter (not on every pixel of movement — repeated
-  // getBoundingClientRect() calls force a synchronous layout reflow and
-  // were a source of visible input lag near buttons).
   const handleMouseEnter = () => {
     if (isTouch || !ref.current) return;
     rectRef.current = ref.current.getBoundingClientRect();
@@ -60,11 +55,7 @@ export default function MagneticButton({
 
   const styles = clsx(
     "relative inline-flex items-center justify-center gap-2 rounded-full px-7 py-3.5 text-sm font-medium tracking-wide transition-colors duration-300",
-    // Light: bright white fill, near-black text — the loud, primary CTA.
     variant === "light" && "bg-white text-void hover:bg-ink",
-    // Dark: solid dark fill, light text — a filled secondary CTA that's
-    // still confident (unlike the transparent outline), for pairing next
-    // to a "light" button so the two read as a deliberate set.
     variant === "dark" &&
       "border border-white/10 bg-panel-2 text-ink hover:border-violet/40 hover:bg-panel-2/80",
     variant === "outline" &&

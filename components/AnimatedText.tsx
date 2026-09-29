@@ -28,11 +28,12 @@ const unit = {
   },
 };
 
-/** One reveal unit: masked by an overflow-hidden wrapper so the slide-up
- *  doesn't clip visibly outside its own box. */
 function AnimatedUnit({ children }: { children: React.ReactNode }) {
   return (
-    <span className="inline-block overflow-hidden align-bottom" aria-hidden="true">
+    <span
+      className="inline-block overflow-hidden align-bottom"
+      aria-hidden="true"
+    >
       <motion.span className="inline-block" variants={unit}>
         {children}
       </motion.span>
@@ -40,17 +41,6 @@ function AnimatedUnit({ children }: { children: React.ReactNode }) {
   );
 }
 
-/** Splits text into chars or words and reveals them with a staggered
- *  slide-up-and-fade.
- *
- *  Each word is grouped in its own `whitespace-nowrap` span, with a real,
- *  breakable space rendered as a separate sibling between word groups. That
- *  matters: earlier this rendered every character as its own independent
- *  inline-block box with nothing but adjacent boxes between them, and
- *  browsers are free to insert a line break between any two atomic
- *  inline-block boxes — which showed up as words splitting mid-word
- *  ("Rajon" wrapping as "Rajo" / "n"). Grouping by word fixes that while
- *  keeping the per-character stagger animation inside each word. */
 export default function AnimatedText({
   text,
   className,
@@ -73,7 +63,10 @@ export default function AnimatedText({
     >
       {words.flatMap((word, wi) => {
         const wordEl = (
-          <span key={`w-${wi}`} className="inline-block whitespace-nowrap">
+          <span
+            key={`w-${wi}`}
+            className="inline-block whitespace-nowrap"
+          >
             {mode === "chars"
               ? Array.from(word).map((char, ci) => (
                   <AnimatedUnit key={ci}>{char}</AnimatedUnit>
@@ -83,8 +76,6 @@ export default function AnimatedText({
                 )}
           </span>
         );
-        // A plain space as its own sibling — the only place a line break
-        // is allowed to happen.
         return wi === words.length - 1 ? [wordEl] : [wordEl, " "];
       })}
     </Tag>

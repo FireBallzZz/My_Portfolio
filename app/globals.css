@@ -280,6 +280,198 @@ body {
   border-radius: 2px;
 }
 
+/* ---------------------------------------------------------------------- */
+/* Marquee tape                                                           */
+/* ---------------------------------------------------------------------- */
+
+.marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee-scroll 38s linear infinite;
+  will-change: transform;
+}
+.marquee-slow {
+  animation-duration: 64s;
+}
+@keyframes marquee-scroll {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-50%, 0, 0); }
+}
+
+/* ---------------------------------------------------------------------- */
+/* Custom cursor                                                           */
+/* ---------------------------------------------------------------------- */
+
+@media (pointer: fine) {
+  html, body, * { cursor: none; }
+  a, button, [role="button"], input, textarea, select, label { cursor: none; }
+}
+
+.cursor-dot,
+.cursor-ring,
+.cursor-label {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 200;
+}
+.cursor-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 9999px;
+  background: #22d3ee;
+  box-shadow: 0 0 0 1px rgba(5, 6, 10, 0.6),
+    0 0 12px rgba(34, 211, 238, 0.65);
+  transform: translate3d(-50%, -50%, 0);
+  will-change: transform;
+}
+.cursor-ring {
+  width: 36px;
+  height: 36px;
+  border-radius: 9999px;
+  border: 1px solid rgba(124, 92, 255, 0.85);
+  background: rgba(124, 92, 255, 0.04);
+  transform: translate3d(-50%, -50%, 0);
+  transition: width 200ms ease, height 200ms ease,
+    border-color 200ms ease, background-color 200ms ease;
+  will-change: transform;
+}
+.cursor-ring.cursor-active {
+  width: 60px;
+  height: 60px;
+  border-color: rgba(34, 211, 238, 0.95);
+  background-color: rgba(34, 211, 238, 0.12);
+}
+.cursor-label {
+  transform: translate3d(-50%, -50%, 0);
+  font-family: var(--font-jetbrains), monospace;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #22d3ee;
+  opacity: 0;
+  transition: opacity 160ms ease;
+  white-space: nowrap;
+}
+.cursor-label.cursor-active {
+  opacity: 1;
+}
+
+/* ---------------------------------------------------------------------- */
+/* Section rail (Awwwards-style vertical index)                           */
+/* ---------------------------------------------------------------------- */
+
+.section-rail-dot {
+  position: relative;
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: rgba(233, 234, 242, 0.22);
+  transition: background 220ms ease, transform 220ms ease, width 220ms ease;
+}
+.section-rail-dot.is-active {
+  background: var(--color-cyan);
+  transform: scale(1.25);
+  box-shadow: 0 0 0 4px rgba(34, 211, 238, 0.18);
+}
+
+/* ---------------------------------------------------------------------- */
+/* Bento tiles                                                             */
+/* ---------------------------------------------------------------------- */
+
+.bento-tile {
+  position: relative;
+  overflow: hidden;
+  border-radius: 1.5rem;
+  background: linear-gradient(160deg,
+    rgba(233, 234, 242, 0.05),
+    rgba(233, 234, 242, 0.015));
+  border: 1px solid rgba(233, 234, 242, 0.08);
+  transition: border-color 320ms ease, transform 320ms ease;
+}
+.bento-tile:hover {
+  border-color: rgba(124, 92, 255, 0.35);
+}
+.bento-tile::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(120% 80% at 0% 0%, rgba(124, 92, 255, 0.10), transparent 60%);
+  opacity: 0;
+  transition: opacity 320ms ease;
+}
+.bento-tile:hover::after {
+  opacity: 1;
+}
+
+.bento-orb {
+  position: absolute;
+  width: 220px;
+  height: 220px;
+  border-radius: 999px;
+  filter: blur(60px);
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+/* ---------------------------------------------------------------------- */
+/* Command palette                                                         */
+/* ---------------------------------------------------------------------- */
+
+.command-shadow {
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.05) inset,
+    0 30px 80px -20px rgba(0, 0, 0, 0.65),
+    0 0 0 1px rgba(124, 92, 255, 0.18);
+}
+
+.command-kbd {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  font-family: var(--font-jetbrains), monospace;
+  font-size: 10px;
+  border-radius: 4px;
+  border: 1px solid rgba(233, 234, 242, 0.16);
+  background: rgba(233, 234, 242, 0.05);
+  color: var(--color-muted);
+}
+
+/* ---------------------------------------------------------------------- */
+/* Code rain easter egg                                                    */
+/* ---------------------------------------------------------------------- */
+
+.code-rain canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* ---------------------------------------------------------------------- */
+/* Project mock preview container                                          */
+/* ---------------------------------------------------------------------- */
+
+.project-mock {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  border-radius: 1rem;
+  overflow: hidden;
+  background: #0a0c14;
+  border: 1px solid rgba(233, 234, 242, 0.08);
+  margin-bottom: 1.5rem;
+}
+
+/* Reduced-motion respect for the marquee */
+@media (prefers-reduced-motion: reduce) {
+  .marquee { animation: none; }
+  .cursor-dot, .cursor-ring, .cursor-label { display: none; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -289,4 +481,29 @@ body {
     transition-duration: 0.001ms !important;
     scroll-behavior: auto !important;
   }
+}
+
+/* ---------------------------------------------------------------------- */
+/* RPG mode additions                                                      */
+/* ---------------------------------------------------------------------- */
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
+}
+
+@keyframes portal-pulse {
+  0%, 100% { transform: scale(1); opacity: 0.6; }
+  50% { transform: scale(1.1); opacity: 1; }
+}
+
+@keyframes pixel-walk {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-2px); }
+}
+
+/* Pixel avatar rendering — prevent the SVG from getting anti-aliased. */
+svg[shape-rendering="crispEdges"] {
+  shape-rendering: crispEdges;
+  image-rendering: pixelated;
 }
