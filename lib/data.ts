@@ -14,7 +14,7 @@ export const profile = {
 `,
   email: "forhadsiddique.official@gmail.com", 
   resumeUrl: "/resume.pdf",
-  avatar: "/avatar.jpg", 
+  avatar: "/avatar1.png",
 };
 
 export const socials = [
