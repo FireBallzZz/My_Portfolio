@@ -28,18 +28,27 @@ const mono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: `${profile.name} — ${profile.roles[0]}`,
+  title: profile.name,
   description: profile.tagline,
-  metadataBase: new URL("http://localhost:3000"),
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"
+  ),
   openGraph: {
-    title: `${profile.name} — ${profile.roles[0]}`,
+    title: profile.name,
     description: profile.tagline,
     type: "website",
+    url: process.env.NEXT_PUBLIC_SITE_URL,
+    siteName: profile.name,
+    locale: "en_US",
   },
   twitter: {
     card: "summary_large_image",
-    title: `${profile.name} — ${profile.roles[0]}`,
+    title: profile.name,
     description: profile.tagline,
+  },
+  robots: {
+    index: true,
+    follow: true,
   },
 };
 
